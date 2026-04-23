@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel</title>
+
+    <style>
+        @font-face {
+            font-family: fuente;
+            src: url(fuente.ttf);
+        }
+        body{
+            background-color: rgb(197, 239, 255);
+        }
+        .mensaje{
+            font-family: fuente;
+            text-align: center;
+            font-size: 1.7em;
+            margin: 20px;
+            font-weight: bold;
+        }
+        .carrousel{
+            text-align: center;
+            margin: 20px;
+        }
+        .botonera{
+            font-family: fuente;
+            text-align: center;
+        }
+        img{
+            border-radius: 7%;
+        }
+        button{
+            font-family: fuente;
+            padding: 10px;
+            font-size: 1.5em;
+            background-color: lime;
+            margin: 15px;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="mensaje">POKÉMON</div>
+
+    <div class="carrousel">
+        <img id="imagen" src="imagen01.jpg" width="900px" height="500px" loading="lazy"/>
+    </div>
+
+    <div class="botonera">
+        <button onclick="mostrar_anterior()">ANTERIOR</button>
+        <button onclick="mostrar_siguiente()">SIGUIENTE</button>
+    </div>
+
+    <script>
+
+        var numero_imagen = 1
+
+        function mostrar_siguiente(){
+            numero_imagen += 1
+            if (numero_imagen > 5){
+                numero_imagen = 1
+            }
+            document.getElementById("imagen").src = "imagen0" + numero_imagen +".jpg"
+        }
+        function mostrar_anterior(){
+            numero_imagen -= 1
+            if (numero_imagen < 1){
+                numero_imagen = 5
+            }
+            document.getElementById("imagen").src = "imagen0" + numero_imagen +".jpg"
+        }
+
+    </script>
+
+</body>
+</html>

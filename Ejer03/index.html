@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sword Art Online</title>
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Ocupa toda la altura de la ventana */
+        }
+        @font-face {
+            font-family: Sao;
+            src: url(SAOWelcomeTT-Regular.ttf);
+        }
+        .barra {
+            display: flex;
+            height: 100px;
+            justify-content: flex-start;
+            align-items: center;
+            font-family: Sao;
+            color: aquamarine;
+            background-color: black;
+        }
+        .izquierda {
+            display: flex;
+            width: 45%;
+        }
+        .derecha {
+            display: flex;
+            width: 50%;
+            color: red;
+            font-size: 1.7em;
+        }
+        .elemento-final {
+            padding: 10px;
+        }
+        .azul {
+            color: rgb(95, 194, 229);
+        }
+        .news {
+            display: flex;
+            left: -250px;
+            position: relative;
+        }
+        .cajas {
+            display: flex;
+            flex-grow: 1; /* Ocupa el espacio restante */
+            font-family: Sao;
+            color: rgb(95, 194, 229);
+            position: relative; 
+        }
+        .info {
+            background-color: black;
+            width: 500px;
+            padding: 10px;
+            text-align: center; 
+        }
+        .info h2 {
+            margin: 0; 
+            margin-bottom: 30px; /* Aumentado para bajar el título */
+            font-size: 1.7em;
+        }
+        .lista {
+            text-align: left; 
+            padding-left: 15px;
+            font-size: 1.3em;
+        }
+        .lista li {
+            margin-bottom: 10px; /* Espacio entre los elementos de la lista */
+        }
+        section{
+            display: flex;
+            width: 1400px;
+            height: 819px;
+        }
+        section img {
+            width: 0px;
+            flex-grow: 1;
+            object-fit: cover;
+            opacity: .85;
+            transition: .5 ease;
+        }
+        section img:hover {
+            cursor: crosshair;
+            width: 400px;
+            opacity: 1;
+            filter: contrast(120%);
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="barra">
+        <div class="izquierda">
+            <div class="elemento-final">
+                <img width="60%" src="https://i.postimg.cc/bNKBDLbS/logo.png">
+            </div>
+        </div>
+        <div class="derecha">
+            <div class="news">NEWS</div>
+            <div><span class="azul">El 12 de Octubre de hace 5 años se estrenó </span>Sword Art Online: Alicization - War of Underworld</div>
+        </div>
+    </div>
+
+    <div class="cajas">
+        <div class="info">
+            <h2>Cronología</h2>
+            <ul class="lista">
+                <li>Sword Art Online</li>
+                <li>Sword Art Online the Movie: Progressive - Aria of a Starless Night</li>
+                <li>Sword Art Online: Progressive - Scherzo of Deep Night</li>
+                <li>Sword Art Online II</li>
+                <li>Sword Art Online the Movie: Ordinal Scale</li>
+                <li>Sword Art Online Alicization</li>
+                <li>Sword Art Online Alicization War of Underworld</li>
+                <li>Sword Art Online Alicization War of Underworld II</li>
+            </ul>
+        </div>
+        <section>
+            <img src="https://i.postimg.cc/7hSmgrSC/1f40699abfb85bf7b7a9be7371caa33a.jpg" loading="lazy">
+            <img src="https://i.postimg.cc/j2DMCJSh/sao1.png" loading="lazy">
+            <img src="https://i.postimg.cc/wxrWZFw4/sao2.png" loading="lazy">
+            <img src="https://i.postimg.cc/5NFPVvG4/sao3.png" loading="lazy">
+            <img src="https://i.postimg.cc/x1D6T8DK/sao4.png" loading="lazy">
+        </section>
+    </div>
+</body>
+</html>

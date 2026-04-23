@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+
+</head>
+<body>
+    
+    <div id="adivina"> Adivina la frase: </div>
+    <div id="frase_mostrar"></div>
+    <div>
+        <button onclick="funcion_adivinar()" id="boton">Adivinar frase</button>
+        <button onclick="funcion_desvelar()" id="boton">Desvelar letra</button>
+    </div>
+
+    <div id="win"> 🎉 Felicidades 🎉 <br> ✨ Puntos: <span id="span_puntos"></span> ✨ </div>
+    <div id="fail"> 💔 Fallaste 💔 <br> ✨ Puntos: <span id="span_puntos_fallo"></span> ✨ </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/color/jquery.color-3.0.0.js" integrity="sha256-nXuT4oV5wsIpHV/V7Ay53Vf/1rg2lqpiGWoP9CRk2tM=" crossorigin="anonymous"></script>
+
+    <script>
+        var frase_adivinar_original = "no se que poner"
+        var frase_adivinar = frase_adivinar_original.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        var frase_mostrar = ""
+        var puntos = 100;
+        var vocales = ["a", "e", "i", "o", "u"]
+        var consonante = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
+
+        $("#win").hide()
+        $("#fail").hide()
+
+        for (indice_letra in frase_adivinar) {
+            var letra = frase_adivinar[indice_letra]
+            if (letra == " ") {
+                frase_mostrar += " "
+            } else {
+                frase_mostrar += "_"
+            }
+        }
+
+        $("#frase_mostrar").html(frase_mostrar)
+
+        function funcion_adivinar() {
+            var introducido = prompt("introduce la frase: ")
+            introducido = introducido.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+            if (introducido.toLowerCase() == frase_adivinar.toLowerCase()) {
+                $("#win").show()
+                $("#span_puntos").html(puntos)
+                $("#win").animate({
+                    "fontSize": "3em",
+                    "color": "green"
+                }, 1500).animate({
+                    "fontSize": "2.7em",
+                    "color": "black"
+                }, 1500)
+            } else {
+                puntos -= 10;
+                $("#fail").ready(function() { fallo() })
+            }
+        }
+
+        function funcion_desvelar() {
+            var letra_introducida = prompt("Introduce una letra:")
+            var nueva_frase_mostrar = ""
+            var letra_encontrada = false;
+
+            for (indice_letra in frase_adivinar) {
+                var letra = frase_adivinar[indice_letra]
+                if (letra.toLowerCase() == letra_introducida.toLowerCase()) {
+                    nueva_frase_mostrar += letra
+                    letra_encontrada = true
+                } else {
+                    nueva_frase_mostrar += frase_mostrar[indice_letra]
+                }
+            }
+
+            // Si no se encuentra la letra y es vocal, restar puntos
+            if (!letra_encontrada && vocales.includes(letra_introducida.toLowerCase())){
+                puntos -= 15;
+                $("#fail").ready(function() { fallo() })
+            }
+            // Si no se encuentra la letra y es consonante, restar puntos
+            if(!letra_encontrada && consonante.includes(letra_introducida.toLowerCase())){
+                puntos -= 5;
+                $("#fail").ready(function() { fallo() })
+            }
+
+            frase_mostrar = nueva_frase_mostrar
+            $("#frase_mostrar").html(frase_mostrar)
+        }
+
+        function fallo() {
+            $("#fail").show()
+                $("#span_puntos_fallo").html(puntos)
+                $("#fail").animate({
+                    "fontSize": "3em",
+                    "color": "red"
+                }, 1500).animate({
+                    "fontSize": "2.7em",
+                    "color": "black"
+                }, 1500).hide({}, 3000)
+        }
+
+    </script>
+
+</body>
+</html>

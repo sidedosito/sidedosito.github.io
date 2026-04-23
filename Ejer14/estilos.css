@@ -1,0 +1,62 @@
+@font-face {
+    font-family: titulo;
+    src: url(titulo.ttf);
+}
+@font-face {
+    font-family: normal;
+    src: url(normal.ttf);
+}
+div{
+    margin: 20px;
+    text-align: center;
+}
+body{
+    background-image: url(https://i.postimg.cc/85J5f5W2/8c21a0c75f29fc897f4a08f0baccd5bb.jpg);
+    background-size: cover;
+}
+.titulo{
+    margin-top: 39px;
+    margin-bottom: 35px;
+    font-size: 3.5em;
+    font-weight: bolder;
+    font-family: titulo;
+}
+.link{
+    font-family: normal;
+    margin-top: 40px;
+}
+.texto{
+    font-size: 2em;
+    font-family: normal;
+    margin-bottom: 10px;
+}
+.info{
+    font-size: 1.5em;
+    font-family: normal;
+    margin-bottom: 40px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.formulario{
+    text-align: left;
+    font-size: 1.3em;
+    margin-left: 39%;
+    margin-right: 36%;
+    font-family: normal;
+}
+.formulario input{
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
+    font-size: .7em;
+    border: black solid 2px;
+}
+.accept{
+    margin-top: 45px;
+}
+.accept button{
+    font-size: 1.8em;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 7px;
+    font-family: normal;
+}

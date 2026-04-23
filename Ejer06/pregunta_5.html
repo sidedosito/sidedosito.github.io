@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas</title>
+
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+
+    <style>
+        @font-face {
+            font-family: Minecraft;
+            src: url(Minecraft.ttf);
+        }
+        body{
+            font-family: Minecraft;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div id="quizGame">QUIZ GAME</div>
+
+    <div id="Points"> Points: <span id="puntuacion"></span> </div>
+
+    <div id="Question">5º pregunta</div>
+
+    <div>Videojuego preferito :3</div>
+
+    <div>Posibles respuestas:</div>
+
+    <div onclick="respuesta(1)"> <a href="#"> 1) Fortnite </a> </div>
+    <div onclick="respuesta(2)"> <a href="#"> 2) Minecraft </a> </div>
+    <div onclick="respuesta(3)"> <a href="#"> 3) Roblox </a> </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+
+        // Almacenar datos en cookie para cambiar de web y no perder datos
+        var points = 100
+
+        // Si existe cookie con puntos, usar valor de cookie.
+        if( Cookies.get("points") != undefined ){
+            points = Cookies.get("points")
+        }
+
+        $("#puntuacion").html(points)
+
+        function game_over(){
+            window.location.href = "game_over.html"
+        }
+
+        function win(){
+            alert("🎉 Respuesta correcta 🎉")
+            window.location.href = "win.html"
+        }
+
+        function respuesta( numero_respuesta ){
+            if (numero_respuesta == 3){
+                var audio = new Audio("win.mp3")
+                audio.play()
+                setTimeout(win,200)
+            }
+            else{
+                points -= 15
+                // Guardar en cookie los puntos de la variable
+                Cookies.set("points", points)
+                $("#puntuacion").html(points)
+                alert("💔 Incorrecto 💔")
+                var audio = new Audio("gameover.mp3")
+                audio.play()
+                if(points <= 0){
+                    setTimeout(game_over,1500)
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

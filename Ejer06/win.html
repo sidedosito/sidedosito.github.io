@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ocupa toda la altura de la ventana */
+            margin: 0; /* Eliminar márgenes */
+            background-color: #f0f0f0; /* Color de fondo opcional */
+            flex-direction: column; /* Colocar elementos en columna */
+            background-color: rgb(255, 209, 251);
+        }
+        #textoFade {
+            font-size: 60px; /* Tamaño de fuente aumentado */
+            color: red;
+            margin: 10px;
+            display: none; /* Ocultar inicialmente */
+        }
+        #textoSlide {
+            font-size: 60px; /* Tamaño de fuente aumentado */
+            color: blue;
+            margin: 10px;
+            display: none; /* Ocultar inicialmente */
+        }
+    </style>
+</head>
+<body>
+    <div id="textoFade">YOU</div>
+    <div id="textoSlide">WIN</div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#textoFade").fadeIn(1500, function() {
+                $("#textoSlide").slideDown(1200); // Desliza el texto hacia abajo
+            });
+        });
+    </script>
+</body>
+</html>

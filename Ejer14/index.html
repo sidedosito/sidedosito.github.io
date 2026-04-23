@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+
+</head>
+<body>
+
+    <div class="titulo">
+        Bienvenido al evento Coffee with Kats
+    </div>
+
+    <div class="texto">
+        Para participar en el evento debes realizar una reserva
+        <br>
+        Introduce los siguientes datos:
+    </div>
+
+    <div class="info">
+        En esta cafeteria podras relajarte y disfrutar de una taza de cafe u otra bebida mientras observas o juegas con gatos
+    </div>
+
+    <div class="formulario">
+        <form onsubmit="return false">
+            Nombre: <input placeholder="Tu nombre" type="text" id="nombre" color="black" /> <br>
+            Apellidos: <input placeholder="Tus apellidos" type="text" id="apellidos" color="black" /> <br>
+            Telefono: <input placeholder="Tu telefono" type="text" id="telefono" color="black" /> <br>
+            Email: <input placeholder="Tu email" type="email" id="email" color="black" /> <br>
+            Tiempo: <input type="time" id="tiempo" color="black" /> <br>
+            Fecha: <input type="date" id="fecha" color="black" /> <br>
+            Alergias: <input placeholder="Tus alergias alimentarias" type="text" id="alergias" color="black" /> <br>
+        </form> 
+    </div>
+
+    <div class="accept">
+        <button onclick="mandar_datos()">ACEPTAR</button>
+    </div>
+
+    <div class="link">
+        <a href="listado.html">Lista participantes</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        function mandar_datos(){
+            // recoger valores introducidos
+            let nombre = document.getElementById("nombre").value;
+            let apellidos = document.getElementById("apellidos").value;
+            let email = document.getElementById("email").value;
+            let telefono = document.getElementById("telefono").value;
+            let tiempo = document.getElementById("tiempo").value;
+            let alergias = document.getElementById("alergias").value;
+            let fecha = document.getElementById("fecha").value;
+
+            alert(
+            "Nombre: " + nombre + "\n" +
+            "Apellidos: " + apellidos + "\n" +
+            "Telefono: " + telefono + "\n" +
+            "Email: " + email + "\n" +
+            "Tiempo: " + tiempo + "\n" +
+            "Fecha: " + fecha  + "\n" +
+            "Alergias: " + alergias
+            )
+            // usamos jquery para mandar los datos a un php en el servidor
+            // el php registra la informacion en una base de datos
+            $.post("registrar.php",
+                {
+                    nombre_usuario: nombre,
+                    apellidos_usuario: apellidos,
+                    email_usuario: email,
+                    telefono_usuario: telefono,
+                    tiempo_usuario: tiempo,
+                    alergias_usuario: alergias,
+                    fecha_usuario: fecha
+                }, function(res){
+                    // código que se ejecuta cuando se envien los datos y registrar.php responda
+                    alert(res)
+                }
+            )
+        }
+
+    </script>
+
+</body>
+</html>

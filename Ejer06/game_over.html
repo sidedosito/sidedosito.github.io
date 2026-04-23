@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas</title>
+
+    <style>
+
+        .mensaje{
+            text-align: center;
+            margin: 300px;
+            font-size: 5em;
+        }
+        .enlace{
+            text-align: center;
+            margin-top: 150px;
+            font-size: 2em;
+        }
+        body{
+            background-color: red;
+        }
+        a{
+            text-decoration: none;
+            color: yellow;
+        }
+        a:hover{
+            color: orange;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mensaje">GAME OVER</div>
+
+    <div class="enlace"> <a href="index.html">RESTART</a></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/color/jquery.color-3.0.0.js" integrity="sha256-nXuT4oV5wsIpHV/V7Ay53Vf/1rg2lqpiGWoP9CRk2tM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+        
+        // Animacion   
+        $(".mensaje").animate({
+            fontSize: "6em",
+            color: "red"
+        },700, function(){
+            $(".mensaje").animate({
+                fontSize: "5em",
+            },900)
+        })
+
+        // prueba animar color fondo
+        $("body").animate({
+            backgroundColor: "black"
+        },1200)
+
+        var points = 100
+
+        if( Cookies.get("points") != undefined ){
+            points = Cookies.get("points")
+            Cookies.set("points", 100)
+        }
+
+    </script>
+
+
+
+</body>
+</html>

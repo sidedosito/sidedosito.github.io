@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @font-face {
+            font-family: fuente;
+            src: url(fuente.ttf);
+        }
+        div{
+            text-align: center;
+            margin: 5px;
+            margin-top: 70px;
+            font-size: 2em;
+            font-family: fuente;
+        }
+        body{
+            background:linear-gradient(rgb(255, 253, 153), rgb(255, 131, 131));
+            background-repeat: no-repeat;
+            height: 100%;
+            margin: 0;
+            background-attachment: fixed;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div>
+        Presiona en las diferencias de la img de la derecha
+    </div>
+    <div>
+        <canvas width="1350" height="350" id="micanvas"></canvas>
+    </div>
+    <div id="info"></div>
+
+    <!-- vamos a meter las imágenes en dos etiquetas imgm para luego poder usarlas en el canvas -->
+    <img src="https://i.postimg.cc/dtpV7M4R/imagen-original.jpg" width="1" height="1" style="visibility: hidden;" loading="lazy">
+    <img src="https://i.postimg.cc/g0PcDV9n/imagen-diferencias.jpg" width="1" height="1" style="visibility: hidden;" loading="lazy">
+    <img src="https://i.postimg.cc/FKgrnYmG/extra-original.jpg" width="1" height="1" style="visibility: hidden;" loading="lazy">
+    <img src="https://i.postimg.cc/cCj08YM1/extra-diferencias.jpg" width="1" height="1" style="visibility: hidden;" loading="lazy">
+
+    <!-- vamos a incluir jquery en esta web -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        // pruebas usando canvas
+        var micanvas = document.getElementById("micanvas")
+
+        // ahora podemos usar el canvas, pero a través de su context
+        var ctx = micanvas.getContext("2d")
+        
+        // vamos a cargar las dos imagenes en el canvas
+        var original = new Image()
+        original.src = "https://i.postimg.cc/dtpV7M4R/imagen-original.jpg"
+        var diferencias = new Image()
+        diferencias.src = "https://i.postimg.cc/g0PcDV9n/imagen-diferencias.jpg"
+        var extraoriginal = new Image()
+        extraoriginal.src = "https://i.postimg.cc/FKgrnYmG/extra-original.jpg"
+        var extradiferencias = new Image()
+        extradiferencias.src = "https://i.postimg.cc/cCj08YM1/extra-diferencias.jpg"
+
+        // vamos a mostrar las variables de imagenes en el canvas
+        // dentro de 500 milisegundos
+        // para dar tiempo al navegador a descargar las imagenes necesarias
+        setTimeout(mostrar_imagenes, 500)
+        
+        function mostrar_imagenes(){
+            ctx.drawImage(original,0,0,675,375)
+            ctx.drawImage(diferencias,675,0,675,375)
+        }
+        
+        var d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0;
+        var numero_imagen = 1;
+
+        // vamos a indicar que hacer cuando se haga click o se presione en la imagen
+        function clicked(e){
+            // obtener coordenadas canvas
+            var canvas_x = $("#micanvas").position().left
+            var canvas_y = $("#micanvas").position().top
+
+            // js poco fiable con operaciones matemáticas
+            // para coordenadas fiables, redondear
+            var x = Math.round(e.pageX - canvas_x)
+            var y = Math.round(e.pageY - canvas_y)
+
+            // siempre que quiera usar jquery lo hare escrbiendo el simbolo de $
+            $("#info").html("Click en: " + x + "x " + y + "y")
+
+            // Comprobar si acertó
+            if( numero_imagen == 1 && x >= 851 && x <= 880 && y >= 178 && y <= 195 ){
+                alert("Encontraste la diferencia 1")
+                d1 = 1
+            }
+            if( numero_imagen == 1 && x >= 1061 && x <= 1080 && y >= 274 && y <= 290 ){
+                alert("Encontraste la diferencia 2")
+                d2 = 1
+            }
+            if( numero_imagen == 1 && x >= 1289 && x <= 1305 && y >= 277 && y <= 290 ){
+                alert("Encontraste la diferencia 3")
+                d3 = 1
+            }
+            if( numero_imagen == 1 && x >= 1310 && x <= 1324 && y >= 211 && y <= 237 ){
+                alert("Encontraste la diferencia 4")
+                d4 = 1
+            }
+            if( numero_imagen == 1 && x >= 1257 && x <= 1272 && y >= 64 && y <= 80 ){
+                alert("Encontraste la diferencia 5")
+                d5 = 1
+            }
+            if( numero_imagen == 1 && d1 == 1 && d2 == 1 && d3 == 1 && d4 == 1 && d5 == 1 ){
+                setTimeout(mostrar_alert,1000)
+            }
+            if( numero_imagen == 2 && x >= 741 && x <= 752 && y >= 63 && y <= 77 ){
+                alert("🎉 ¡Encontraste la diferencia extra! 🎉")
+            }
+        }
+
+        function mostrar_alert(){
+            alert("🎉 ¡Has encontrado las 5 diferencias! 🎉")
+            ctx.drawImage(extraoriginal,0,0,675,375)
+            ctx.drawImage(extradiferencias,675,0,675,375)
+            numero_imagen = 2;
+        }
+
+        // siempre que quiera usar jquery lo hare escrbiendo el simbolo de $
+        $("#micanvas").click(clicked)
+
+    </script>
+
+</body>
+</html>

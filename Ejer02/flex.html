@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .padre{
+            background-color: burlywood;
+            /* lo siguiente activa flex */
+            display: flex;
+            height: 150px;
+            /* así decimos cómo alinear los elementos de izquierda a derecha */
+            justify-content:center ;
+        }
+        .hijo{
+            background-color: brown;
+            width: 200px;
+            height: 100px;
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="padre">
+        <div class="hijo">UNO</div>
+        <div class="hijo">DOS</div>
+        <div class="hijo">TRES</div>
+        <div class="hijo">CUATRO</div>
+    </div>
+
+
+</body>
+</html>

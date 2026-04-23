@@ -1,0 +1,44 @@
+@font-face {
+    font-family: mifuente;
+    src: url(mifuente.ttf);
+}
+@font-face {
+    font-family: mifuente2;
+    src: url(mifuente2.ttf);
+}
+
+body{
+    background-image: url("https://i.postimg.cc/90HV6b9G/3d-rendering-questions-background-23-2151455632.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -100px;
+    text-align: center;
+    margin-top: 150px;
+}
+#adivina{
+    font-size: 3.2em;
+    font-family: mifuente2;
+}
+#frase_mostrar{
+    margin-top: 50px;
+    font-size: 2.7em;
+    font-family: mifuente;
+}
+#boton{
+    margin: 15px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    font-size: 2.3em;
+    background-color: rgb(240, 125, 255);
+    font-family: mifuente2;
+}
+#win{
+    margin-top: 20px;
+    font-size: 2.7em;
+    font-family: mifuente2;
+}
+#fail{
+    margin-top: 20px;
+    font-size: 2.7em;
+    font-family: mifuente2;
+}

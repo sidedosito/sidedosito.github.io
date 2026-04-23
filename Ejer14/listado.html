@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista</title>
+
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+
+</head>
+<body>
+
+    <div class="titulo">Lista de personas apuntadas al evento</div>
+
+    <div class="texto"> <a href="index.html">Volver</a> </div>
+
+    <div class="texto" id="usuarios"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        // pedir a un php todos los usuarios de la tabla de la base de datos
+
+        // para obtener info usamos get
+        // para enviar info usamos post
+        // getJSON pide info en forma de JSON
+
+        // JSON (JavaScript Object Notation) es un formato de texto para indicar información
+        $.getJSON("obtenerUsuarios.php").done(
+            function(res){
+                // procesar respuestra y mostrar en div id usuarios
+                // let usuarios = document.createElement("div")
+                // usuarios.innerHTML = "UwU"
+
+                // meter el div en el div de id usuarios
+
+                // procesar usuario a usuario en la respuesta, recorrerla
+                res.forEach(element => {
+                    // alert(element["nombre"])
+
+                    let usuarios = document.createElement("div")
+                    usuarios.innerHTML = element["nombre"] + " " + element["apellidos"] + " " + element["email"] + " " + element["telefono"] + " " + element["tiempo"] + " " + element["alergias"] + " " + element["fecha"]
+                    let divUsuarios = document.querySelector("#usuarios")
+                    divUsuarios.append(usuarios)
+                });
+
+            }
+        )
+    </script>
+
+</body>
+</html>

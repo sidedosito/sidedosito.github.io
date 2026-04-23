@@ -1,0 +1,33 @@
+div {
+    text-align: center;
+    font-size: 1.5em; 
+    margin: 10px;
+}
+body {
+    margin-top: 20px;
+    background-color: rgb(242, 243, 167);
+}
+a:link, a:visited {
+    color: rgb(192, 56, 255);
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+}
+a {
+    margin-top: 200px;
+    font-weight: bold;
+}
+#quizGame {
+    font-size: 4.5em;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+#Question {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+#Points {
+    font-size: 2.5em;
+    color: rgb(38, 0, 255);
+}

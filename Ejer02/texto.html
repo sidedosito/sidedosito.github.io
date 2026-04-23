@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/basico.css" />
+    <style>
+        .animacion1{
+            background-color: aliceblue;
+            animation-name: cambio-color-fondo;
+            animation-duration: 1s;
+        }
+        .animacion2{
+            animation-name: cambio-texto;
+            animation-duration: 1.7s;
+        }
+        .animacion3{
+            animation-name: cambio-margen;
+            animation-duration: 1.7s;
+        }
+        .animacion4{
+            animation-name: cambio-color-texto;
+            animation-duration: 2s;
+        }
+        @keyframes cambio-color-fondo{
+            from {background-color: darkmagenta;}
+            to {background-color: blue;}
+        }
+        @keyframes cambio-texto{
+            0% {font-size: 1.5em;}
+            50% {font-size: 3em;}
+            100% {font-size: 1.5em;}
+        }
+        @keyframes cambio-margen{
+            0% {margin: 20px;}
+            50% {margin: 80px;}
+            100% {margin: 20px;}
+        }
+        @keyframes cambio-color-texto{
+            0% {color: red;}
+            50% {color: blue;}
+            100% {color: black;}
+        }
+
+
+    </style>
+</head>
+<body>
+    
+
+    <h1 class="animacion1" >esto es un h1</h1>
+    <h2 class="animacion2" >esto es un h2</h2>
+    <h3 class="animacion3" >esto es un h3</h3>
+    <h4 class="animacion4" >esto es un h4</h4>
+
+
+</body>
+</html>

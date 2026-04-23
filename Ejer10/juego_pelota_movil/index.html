@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        @font-face {
+            font-family: fuente;
+            src: url(kirby-classic.ttf);
+        }
+
+        #micanvas{
+            background-image: url("https://i.postimg.cc/y8Z43JJN/fondo-vacio-naturaleza-paisaje-1308-34589.jpg");
+            background-size: cover;
+        }
+        #info, #info2, #info3{
+            font-family: fuente;
+            margin: 15px;
+        }
+        div{
+            text-align: center;
+            font-size: 1.5em;
+        }
+        button{
+            text-align: center;
+            font-size: 1em;
+            padding-left: 5px;
+            padding-right: 5px;
+            background-color: rgba(169, 169, 169, 0.473);
+            color: rgb(0, 0, 0);
+            margin: 1px;
+            border: 0;
+        }
+        .boton_arriba_abajo{
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+        .joystick{
+            position: absolute;
+            bottom: 17%;
+            left: 5%;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="info3"></div>
+
+    <div class="joystick">
+        <div>
+            <button onclick="cambiar_direccion(4)" class="boton_arriba_abajo">↑</button>
+        </div>
+        <div>
+            <button onclick="cambiar_direccion(3)">←</button>
+            <button onclick="cambiar_direccion(2)" class="boton_arriba_abajo">↓</button>
+            <button onclick="cambiar_direccion(1)">→</button>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <canvas id="micanvas" width="350" height="500"></canvas>
+    </div>
+
+    <img src="https://i.postimg.cc/RCXXdP76/KSA-Bandana-Waddle-Dee-Icon.png" style="visibility: hidden;" width="1px" height="1px" loading="lazy">
+    <img src="https://i.postimg.cc/Tw9gJTZG/door.png" style="visibility: hidden;" width="1px" height="1px" loading="lazy">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        let micanvas = document.getElementById("micanvas")
+        let ctx = micanvas.getContext("2d")
+        let imagen_pelota = new Image()
+        imagen_pelota.src = "https://i.postimg.cc/RCXXdP76/KSA-Bandana-Waddle-Dee-Icon.png"
+        let imagen_meta = new Image()
+        imagen_meta.src = "https://i.postimg.cc/Tw9gJTZG/door.png"
+        let imagen_obstaculo = new Image()
+        imagen_obstaculo.src = "https://i.postimg.cc/0yKNGJBr/342-3425004-view-samegoogleiqdbs.png"
+
+        // coordenadas pelota
+        let x_bola = 12.5
+        let y_bola  = 12.5
+
+        // coordenadas meta
+        let x_meta = 250
+        let y_meta = 400
+        let ancho_meta = 50
+        let alto_meta = 60
+
+        // coordenadas obstáculo 1
+        let obstaculo_1_x = 50
+        let obstaculo_1_y = 100
+        let obstaculo_1_ancho = 100
+        let obstaculo_1_alto = 50
+
+        // coordenadas obstáculo
+        let obstaculo_2_x = 250
+        let obstaculo_2_y = 200
+        let obstaculo_2_ancho = 100
+        let obstaculo_2_alto = 50
+
+        // coordenadas obstáculo
+        let obstaculo_3_x = 50
+        let obstaculo_3_y = 300
+        let obstaculo_3_ancho = 100
+        let obstaculo_3_alto = 50
+
+        // especificar direcciones
+        // const = variable que no cambia, no se modifica
+        // cont se escriben todo en mayúscula
+        const DERECHA = 1 
+        const ABAJO = 2
+        const IZQUIERDA = 3
+        const ARRIBA = 4
+
+        // dirección actual pelota
+        let direccion = DERECHA
+        var speed = 1
+        var gol = 0
+
+        function cambiar_direccion(numero) {
+            if(numero == 1) {
+                direccion = DERECHA
+            } else if(numero == 2) {
+                direccion = ABAJO
+            } else if(numero == 3) {
+                direccion = IZQUIERDA
+            } else if(numero == 4) {
+                direccion = ARRIBA
+            }
+        }
+
+        function colision_hitbox(x, y, ancho, alto) {
+            // función devuelve true si bola está en x, y, ancho, alto indicado
+            if( x_bola >= x && x_bola <= ( x + ancho ) && y_bola >= y && y_bola <= ( y + alto ) ) {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        function pintar_canvas() {
+            ctx.clearRect(0, 0, micanvas.width, micanvas.height)
+            ctx.drawImage(imagen_pelota, x_bola -12.5, y_bola -12.5, 25, 25)
+
+            // zona meta
+            ctx.fillStyle = "rgb(255, 172, 79)"
+            ctx.drawImage(imagen_meta, x_meta, y_meta, ancho_meta, alto_meta)
+
+            // zona obstáculo
+            ctx.fillStyle = "rgb(255, 172, 79)"
+            ctx.drawImage(imagen_obstaculo, obstaculo_1_x, obstaculo_1_y, obstaculo_1_ancho, obstaculo_1_alto)
+            ctx.drawImage(imagen_obstaculo, obstaculo_2_x, obstaculo_2_y, obstaculo_2_ancho, obstaculo_2_alto)
+            ctx.drawImage(imagen_obstaculo, obstaculo_3_x, obstaculo_3_y, obstaculo_3_ancho, obstaculo_3_alto)
+
+            // mover elementos
+            switch (direccion) {
+                case DERECHA:
+                    x_bola+=speed
+                    break
+                case ABAJO:
+                    y_bola+=speed
+                    break
+                case IZQUIERDA:
+                    x_bola-=speed
+                    break
+                case ARRIBA:
+                    y_bola-=speed
+                    break
+                default:
+                    break
+            } // end switch direccion
+
+            // mover obstáculo 1
+            obstaculo_1_x+=(speed/2)
+            if(obstaculo_1_x > micanvas.width) {
+                obstaculo_1_x = 0
+            }
+
+            // mover obstáculo 2
+            obstaculo_2_x-=(speed/2)
+            if(obstaculo_2_x < (micanvas.width-micanvas.width) ) {
+                obstaculo_2_x = 250
+            }
+
+            // mover obstáculo 3
+            obstaculo_3_x+=(speed/2)
+            if(obstaculo_3_x > micanvas.width) {
+                obstaculo_3_x = 0
+            }
+
+            // detectar si bola salir pantalla o llegar a meta
+            if(x_bola > micanvas.width) {
+                alert("💔 lost 💔")
+                // parar pintar_canvas
+                clearInterval(intervalo)
+            } else if(y_bola > micanvas.height) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            } else if(x_bola < ((micanvas.width-micanvas.width)-60)) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            } else if(y_bola < ((micanvas.height-micanvas.height)-60)) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            }
+
+            // colisión bola con obstáculo_1
+            let colisión_obstáculo_1 = colision_hitbox(obstaculo_1_x, obstaculo_1_y, obstaculo_1_ancho, obstaculo_1_alto)
+            if(colisión_obstáculo_1 == true) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            }
+
+            // colisión bola con obstáculo_2
+            let colisión_obstáculo_2 = colision_hitbox(obstaculo_2_x, obstaculo_2_y, obstaculo_2_ancho, obstaculo_2_alto)
+            if(colisión_obstáculo_2 == true) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            }
+
+            // colisión bola con obstáculo_3
+            let colisión_obstáculo_3 = colision_hitbox(obstaculo_3_x, obstaculo_3_y, obstaculo_3_ancho, obstaculo_3_alto)
+            if(colisión_obstáculo_3 == true) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            }
+
+            // colisión bola con meta
+            let colision_meta = colision_hitbox(x_meta, y_meta, ancho_meta, alto_meta)
+            if(colision_meta == true) {
+                alert("✨ win ✨")
+                reposicionar()
+                reiniciar()
+            }
+        } // end pintar_canvas
+
+        function reposicionar() {
+            y_meta = Math.floor(Math.random() * 251) // 401 para incluir el 400
+            return y_meta
+            $("#info3").html("goals: " + gol)
+        }
+
+        function reiniciar() {
+            x_bola = 12.5
+            y_bola  = 12.5
+            speed++
+            gol++
+        }
+
+        let intervalo = setInterval(pintar_canvas, 10)
+        $("#info3").html("goals: " + gol)
+
+    </script>
+
+</body>
+</html>

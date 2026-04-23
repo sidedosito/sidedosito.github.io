@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        @font-face {
+            font-family: fuente;
+            src: url(kirby-classic.ttf);
+        }
+
+        #micanvas{
+            background-image: url("https://i.postimg.cc/y8Z43JJN/fondo-vacio-naturaleza-paisaje-1308-34589.jpg");
+            background-size: cover;
+        }
+        #info, #info2, #info3{
+            font-family: fuente;
+            text-align: center;
+            font-size: 1.5em;
+            margin: 15px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="info">&nbsp;</div>
+    <div id="info2">&nbsp;</div>
+    <div style="text-align: center;">
+        <canvas id="micanvas" width="800" height="600"></canvas>
+    </div>
+    <div id="info3"></div>
+
+    <img src="https://i.postimg.cc/RCXXdP76/KSA-Bandana-Waddle-Dee-Icon.png" style="visibility: hidden;" width="1px" height="1px" loading="lazy">
+    <img src="https://i.postimg.cc/Tw9gJTZG/door.png" style="visibility: hidden;" width="1px" height="1px" loading="lazy">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        let micanvas = document.getElementById("micanvas")
+        let ctx = micanvas.getContext("2d")
+        let imagen_pelota = new Image()
+        imagen_pelota.src = "https://i.postimg.cc/RCXXdP76/KSA-Bandana-Waddle-Dee-Icon.png"
+        let imagen_meta = new Image()
+        imagen_meta.src = "https://i.postimg.cc/Tw9gJTZG/door.png"
+
+        // coordenadas pelota
+        let x = 0
+        let y = 0
+
+        // coordenadas meta
+        let x_meta = 700
+        let y_meta = 450
+        let ancho_meta = 100
+        let alto_meta = 150
+
+        // especificar direcciones
+        // const = variable que no cambia, no se modifica
+        // cont se escriben todo en mayúscula
+        const DERECHA = 1 
+        const ABAJO = 2
+        const IZQUIERDA = 3
+        const ARRIBA = 4
+
+        // dirección actual pelota
+        let direccion = DERECHA
+        var speed = 2
+        var gol = 0
+
+        // detectar pulsaciones del teclado
+        $(document).keypress( function(e) {
+            // código a ejecutar al pulsar tecla en web
+            $("#info").html("key: " + e.key)
+            // movimiento pero con switch
+            switch (e.key.toLowerCase()) {
+                case "d":
+                    direccion = DERECHA
+                    break
+                case "s":
+                    direccion = ABAJO
+                    break
+                case "a":
+                    direccion = IZQUIERDA
+                    break
+                case "w":
+                    direccion = ARRIBA
+                    break
+                default:
+                    // si no cumple lo anterior
+                    break
+            } // end switch key
+            $("#info2").html("direccion: " + direccion)
+        } ) // end keypress
+
+        function pintar_canvas() {
+            ctx.clearRect(0, 0, micanvas.width, micanvas.height)
+            ctx.drawImage(imagen_pelota, x, y, 60, 60)
+
+            // zona meta
+            ctx.fillStyle = "rgb(255, 172, 79)"
+            ctx.drawImage(imagen_meta, x_meta, y_meta, ancho_meta, alto_meta)
+
+            // mover elementos
+            switch (direccion) {
+                case DERECHA:
+                    x+=speed
+                    break
+                case ABAJO:
+                    y+=speed
+                    break
+                case IZQUIERDA:
+                    x-=speed
+                    break
+                case ARRIBA:
+                    y-=speed
+                    break
+                default:
+                    break
+            } // end switch direccion
+
+            // detectar si bola salir pantalla o llegar a meta
+            if(x > micanvas.width) {
+                alert("💔 lost 💔")
+                // parar pintar_canvas
+                clearInterval(intervalo)
+            } else if(y > micanvas.height) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            } else if(x < ((micanvas.width-micanvas.width)-60)) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            } else if(y < ((micanvas.height-micanvas.height)-60)) {
+                alert("💔 lost 💔")
+                clearInterval(intervalo)
+            }
+
+            // colisión bola con meta
+            if(x >= x_meta && x <= (x_meta+ancho_meta) && y >= y_meta && y <= (y_meta+alto_meta)) {
+                alert("✨ win ✨")
+                reposicionar()
+                reiniciar()
+            }
+        } // end pintar_canvas
+
+        function reposicionar() {
+            y_meta = Math.floor(Math.random() * 451) // 401 para incluir el 400
+            return y_meta
+            $("#info3").html("goals: " + gol)
+        }
+
+        function reiniciar() {
+            x = 0
+            y = 0
+            speed++
+            gol++
+        }
+
+        alert("lleva pelota al rectangulo \n" + "tecla D -> derecha \n" + "tecla S -> abajo \n")
+        let intervalo = setInterval(pintar_canvas, 5)
+        $("#info3").html("goals: " + gol)
+
+    </script>
+
+</body>
+</html>

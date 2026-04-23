@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @font-face {
+            font-family: kirby;
+            src: url(kirby.ttf);
+        }
+        body{
+            text-align: center;
+            font-size: 1.5em;
+            background-color: rgb(243, 196, 255);
+            font-family: kirby;
+        }
+        div{
+            margin: 10px;
+        }
+        .puntos{
+        display: flex;
+        width: fit-content;
+        margin: 0 auto;
+        }
+        .tiempo{
+        display: flex;
+        width: fit-content;
+        margin: 0 auto;
+        }
+        .wrap{
+            width: 500px;
+            height: 500px;
+            margin: 0 auto; /* centra el elemento, en algunos elemento no funciona */
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .cuadrante{
+            height: 104px;
+            width: 104px;
+            background-color: darkmagenta;
+            background-image: url("https://i.postimg.cc/tCHQFFff/star.png");
+            background-size: cover;
+        }
+        .kirby1{
+            background-image: url("https://i.postimg.cc/QdpmLTx2/Kirby1.png");
+            background-size: cover;
+        }
+        .kirby2{
+            background-image: url("https://i.postimg.cc/mrBwTgPt/Kirky2.png");
+            background-size: cover;
+        }
+        .waddle1{
+            background-image: url("https://i.postimg.cc/FKbhJDFT/Waddle1.png");
+            background-size: cover;
+        }
+        .waddle2{
+            background-image: url("https://i.postimg.cc/639tVnyt/Waddle2.png");
+            background-size: cover;
+        }
+        .corona{
+            background-image: url("https://i.postimg.cc/XJvky1cW/Kirby-Warpstar-AWPortal.png");
+            background-size: cover;
+        }
+    </style>
+
+</head>
+<body>
+
+    <p> Presiona al bicho al aparecer hasta que acabe el tiempo</p>
+
+    <div class="puntos">
+        <span>puntos: </span>
+        <span id="puntos"></span>
+    </div>
+
+    <div class="tiempo">
+        <span>tiempo: </span>
+        <span id="tiempo"></span>
+    </div>
+
+    <div class="wrap">
+        <div class="cuadrante" id="0"></div>
+        <div class="cuadrante" id="1"></div>
+        <div class="cuadrante" id="2"></div>
+        <div class="cuadrante" id="3"></div>
+        <div class="cuadrante" id="4"></div>
+        <div class="cuadrante" id="5"></div>
+        <div class="cuadrante" id="6"></div>
+        <div class="cuadrante" id="7"></div>
+        <div class="cuadrante" id="8"></div>
+        <div class="cuadrante" id="9"></div>
+        <div class="cuadrante" id="10"></div>
+        <div class="cuadrante" id="11"></div>
+        <div class="cuadrante" id="12"></div>
+        <div class="cuadrante" id="13"></div>
+        <div class="cuadrante" id="14"></div>
+        <div class="cuadrante" id="15"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/color/jquery.color-3.0.0.js" integrity="sha256-nXuT4oV5wsIpHV/V7Ay53Vf/1rg2lqpiGWoP9CRk2tM=" crossorigin="anonymous"></script>
+
+    <script>
+        // variable tipo array
+        // array = variable con varias variables
+        // var ejemplo_array = ["hola", "que tal", "adios"]
+        // // elementos tipo string
+
+        // // acceder elemento de un array
+        // var primero = ejemplo_array[0]
+        // alert("1º elemento array: " + primero)
+
+        // guardar en un array con class cuadrante
+        var cuadrantes = document.querySelectorAll(".cuadrante")
+        var puntos = 0
+        var topo_sacado = 0
+        var tiempo = 60
+        var puntos_tamaño = 1.5
+
+        // accion al hacer click en casilla
+        cuadrantes.forEach( function(e){
+            // codigo ejectar para cada cuadrante
+            e.addEventListener("click", click_cuadrante)
+        } )
+
+        function click_cuadrante() {
+            // código de click en cuadrante
+            // alert("clicked: " + this.id)
+            if ( topo_sacado == this.id ) {
+                puntos += 10
+                var puntos_tamaño = 1 + (puntos) * 0.002
+                document.getElementById("puntos").style.fontSize=puntos_tamaño + "em";
+                document.getElementById("puntos").innerHTML = puntos
+                // ocultar topo
+                this.classList.remove("waddle1")
+                this.classList.remove("kirby1")
+                topo_sacado = -1
+                if( puntos <= 90 ) {
+                    this.classList.add("waddle2")
+                    setTimeout(() => {this.classList.remove("waddle2");}, 470); 
+                } else {
+                    this.classList.add("kirby2")
+                    setTimeout(() => {this.classList.remove("kirby2");}, 470);
+                }
+                
+            } else{
+                puntos -= 10
+                document.getElementById("puntos").innerHTML = puntos
+            }
+        }
+
+        function sacar_topo() {
+            // borrar topo antes
+            cuadrantes.forEach(function(e){
+                e.classList.remove("waddle1")
+                e.classList.remove("kirby1")
+                topo_sacado = -1
+            })
+
+            var numero_aleatorio = Math.floor( Math.random() * 14 )
+            // guardar en var el id cuadrante del topo
+            topo_sacado = cuadrantes[numero_aleatorio].id
+            if( puntos <= 90 ) {
+                cuadrantes[numero_aleatorio].classList.add("waddle1")
+            } else {
+                cuadrantes[numero_aleatorio].classList.add("kirby1")
+            }
+        }
+
+        function procesar_tiempo() {
+            tiempo -= 1
+            var tiempo_tamaño = 1 + (60 - tiempo) * 0.02
+            document.getElementById("tiempo").style.fontSize=tiempo_tamaño + "em";
+
+            if( tiempo <= 0 ) {
+                if(puntos >= 10){
+                    cuadrantes.forEach(function(e){e.classList.add("corona")})
+                }
+                
+                clearInterval(intervalo_topo)
+                clearInterval(intervalo_tiempo)
+                // eliminar topo
+                cuadrantes.forEach(function(e){
+                    e.classList.remove("waddle1"),
+                    e.classList.remove("kirby1")
+                })
+                $("#puntos").animate({
+                    "fontSize": (puntos_tamaño += 1) + "em",
+                    "color": "yellow"
+                },500).animate({
+                    "fontSize": (puntos_tamaño -= 1) + "em",
+                    "color": "green"
+                },500)
+            }
+
+            document.getElementById("tiempo").innerHTML = tiempo
+        }
+
+        // setInterval ejecuta función cada cierto tiempo
+        var intervalo_topo = setInterval( sacar_topo, 1000 )
+        var intervalo_tiempo = setInterval( procesar_tiempo, 300 )
+        // con getElementById no hace falta #
+        document.getElementById("puntos").innerHTML = puntos
+        document.getElementById("tiempo").innerHTML = tiempo
+    </script>
+
+</body>
+</html>

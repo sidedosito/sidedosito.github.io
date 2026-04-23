@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @font-face {
+            font-family: navidad;
+            src: url(Santa.ttf);
+        }
+        body{
+            text-align: center;
+            margin: 15px;
+            background-image: url(https://i.postimg.cc/jdf4mhB7/9434cfdc4f55a9704a7ed9b6bf621617.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        img{
+            width: 100px;
+            height: 130px;
+            margin: 15px;
+        }
+        .texto{
+            font-family: navidad;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            font-size: 2em;
+            color: transparent;
+            text-shadow: 0px 0px 0px white, 0px 5px 5px black;
+            
+        }
+        .tablero{
+            margin-left: 17%;
+            margin-right: 17%;
+        }
+        #points{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="texto">
+        <div>ADIVINA LAS PAREJAS</div>
+        <div id="points"></div>
+    </div>
+
+    <div class="tablero">
+        <!-- AQUI VAN LAS CARTAS -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        let array_cartas = [
+            {
+                nombre: "chimenea",
+                imagen: "imagenes/chimenea.png"
+            },
+            {
+                nombre: "ciervo",
+                imagen: "imagenes/ciervo.png"
+            },
+            {
+                nombre: "copito",
+                imagen: "imagenes/copito.png"
+            },
+            {
+                nombre: "galleta",
+                imagen: "imagenes/galleta.png"
+            },
+            {
+                nombre: "muerdago",
+                imagen: "imagenes/muerdago.png"
+            },
+            {
+                nombre: "muñeco",
+                imagen: "imagenes/muñeco.png"
+            },
+            {
+                nombre: "oso",
+                imagen: "imagenes/oso.png"
+            },
+            {
+                nombre: "pinguino",
+                imagen: "imagenes/pinguino.png"
+            },
+            {
+                nombre: "regalo",
+                imagen: "imagenes/regalo.png"
+            },
+            {
+                nombre: "zorro",
+                imagen: "imagenes/zorro.png"
+            },
+            {
+                nombre: "chimenea",
+                imagen: "imagenes/chimenea.png"
+            },
+            {
+                nombre: "ciervo",
+                imagen: "imagenes/ciervo.png"
+            },
+            {
+                nombre: "copito",
+                imagen: "imagenes/copito.png"
+            },
+            {
+                nombre: "galleta",
+                imagen: "imagenes/galleta.png"
+            },
+            {
+                nombre: "muerdago",
+                imagen: "imagenes/muerdago.png"
+            },
+            {
+                nombre: "muñeco",
+                imagen: "imagenes/muñeco.png"
+            },
+            {
+                nombre: "oso",
+                imagen: "imagenes/oso.png"
+            },
+            {
+                nombre: "pinguino",
+                imagen: "imagenes/pinguino.png"
+            },
+            {
+                nombre: "regalo",
+                imagen: "imagenes/regalo.png"
+            },
+            {
+                nombre: "zorro",
+                imagen: "imagenes/zorro.png"
+            }
+        ]
+
+        // obtener div tablero y meter cartas creadas
+        let tablero = document.querySelector(".tablero")
+
+        let numero_carta = 0
+        let primera_carta = null
+        let segunda_carta = null
+        let numero_carta_primera = -1
+        let numero_carta_segunda = -1
+        let parejas_adivinadas = 0
+        var puntos = 0
+
+        function preparar_cartas() {
+            for(i in array_cartas) {
+                let carta = array_cartas[i]
+                // alert("preparando carta: " + carta[i].nombre)
+                let nuevo_elemento = document.createElement("img")
+                nuevo_elemento.setAttribute("src", "imagenes/back.png")
+                nuevo_elemento.setAttribute("imagen_real", carta.imagen)
+                nuevo_elemento.setAttribute("numerocarta", i)
+                nuevo_elemento.addEventListener("click", procesar_carta)
+                tablero.appendChild(nuevo_elemento)
+            }
+        }
+
+        function procesar_carta() {
+            // this hace referencia, en este caso, al elemento que se hizo click
+            // alert("Haz hecho click en la carta: " + this.getAttribute("numerocarta"))
+            // return
+
+            // prevenir click en carta ya clickeada
+            if( this.getAttribute("src") != "imagenes/back.png" ) {
+                return
+            }
+
+            this.setAttribute("src", this.getAttribute("imagen_real"))
+            if( numero_carta == 0 ) {
+                primera_carta = this.getAttribute("imagen_real")
+                numero_carta_primera = this.getAttribute("numerocarta")
+            }
+            if( numero_carta == 1 ) {
+                segunda_carta = this.getAttribute("imagen_real")
+                numero_carta_segunda = this.getAttribute("numerocarta")
+            }
+            numero_carta++
+            // una vez tenga ambas cartas, mirar si son iguales
+            if( primera_carta != null && segunda_carta != null ) {
+                if( primera_carta != segunda_carta ) {
+                    setTimeout(fallo_carta, 400)
+                } else {
+                    // alert("🎉 acertaste 🎉")
+                    parejas_adivinadas++
+                    puntos+=10
+                    document.getElementById("points").innerHTML = "PUNTOS: " + puntos;
+                    if( parejas_adivinadas == 10 ) {
+                        setTimeout(ganar, 400)
+                    }
+                }
+                numero_carta = 0
+                primera_carta = null
+                segunda_carta = null
+            }
+        } // end procesar_carta
+
+        function fallo_carta() {
+            puntos-=2
+            document.getElementById("points").innerHTML = "PUNTOS: " + puntos;
+            alert("💔 fallaste 💔")
+
+            // dar la vuelta a las cartas clickeadas
+            // obtener cartas numero_carta_primera y numero_carta_segunda
+            let carta_primera = document.querySelector('[numerocarta="' + numero_carta_primera + '"]')
+            let carta_segunda = document.querySelector('[numerocarta="' + numero_carta_segunda + '"]')
+            carta_primera.setAttribute("src", "imagenes/back.png")
+            carta_segunda.setAttribute("src", "imagenes/back.png")
+        }
+
+        function ganar() {
+            alert("🎉 has ganado 🎉")
+        }
+
+        $("#points").html("PUNTOS: " + puntos);
+
+        // antes mostrar cartas, ordenador de manera aleatoria
+        array_cartas.sort(() => 0.5 - Math.random())
+
+        preparar_cartas()
+
+    </script>
+
+</body>
+</html>
